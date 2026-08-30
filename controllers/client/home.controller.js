@@ -1,0 +1,6 @@
+module.exports.index = (req, res) => {
+  res.render("clients/page/home/index", {
+    title: "trang chủ",
+    message: "xin ",
+  });
+};

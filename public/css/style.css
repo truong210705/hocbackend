@@ -1,0 +1,115 @@
+.header {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+.header .inner-logo img {
+  max-height: 50px;
+  max-width: 100%;
+}
+.header .inner-menu > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.header .inner-menu > ul > li {
+  margin-left: 20px;
+}
+/* end header */
+.footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+/* end footer */
+/* Container spacing */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Định nghĩa layout cho cột sản phẩm */
+.col4 {
+  width: 25%; /* 4 cột trên 1 hàng */
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+/* Responsive: Khi màn hình nhỏ hơn 992px chỉ còn 2 cột */
+@media (max-width: 992px) {
+  .col4 {
+    width: 50%;
+  }
+}
+
+/* Responsive: Khi màn hình nhỏ hơn 576px chỉ còn 1 cột */
+@media (max-width: 576px) {
+  .col4 {
+    width: 100%;
+  }
+}
+
+/* Card sản phẩm */
+.product-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Ảnh sản phẩm */
+.product-item .inner-image img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Nội dung sản phẩm */
+.product-item .inner-content {
+  padding: 10px 15px;
+  text-align: center;
+}
+
+.product-item .inner-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 5px;
+  color: #333;
+}
+
+.product-item .inner-price-new {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #e53935; /* đỏ nổi bật */
+}
+
+.product-item .inner-price-old {
+  font-size: 0.9rem;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 5px;
+}
+
+.product-item .inner-discount {
+  font-size: 0.8rem;
+  color: #388e3c; /* xanh giảm giá */
+  background: #e8f5e9;
+  padding: 2px 6px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 4px;
+}
