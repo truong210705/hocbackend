@@ -1,5 +1,31 @@
 const Product = require("../../model/product.model");
 module.exports.index = async (req, res) => {
+  let filterStatus = [
+    {
+      name: "Tất cả",
+      status: "",
+      class: "",
+    },
+    {
+      name: "Hoạt động",
+      status: "active",
+      class: "",
+    },
+    {
+      name: "Dừng hoạt động",
+      status: "inactive",
+      class: "",
+    },
+  ];
+  if (req.query.status) {
+    const index = filterStatus.findIndex(
+      (index) => index.status == req.query.status,
+    );
+    filterStatus[index].class = "active";
+  } else {
+    const index = filterStatus.findIndex((index) => index.status == "");
+    filterStatus[index].class = "active";
+  }
   let find = {
     deleted: false,
   };
@@ -10,5 +36,6 @@ module.exports.index = async (req, res) => {
   res.render("admin/page/product/index", {
     title: "trang sản phẩm",
     product: product,
+    filterStatus: filterStatus,
   });
 };
