@@ -1,5 +1,6 @@
 const Product = require("../../model/product.model");
 module.exports.index = async (req, res) => {
+  //button status start
   let filterStatus = [
     {
       name: "Tất cả",
@@ -26,11 +27,16 @@ module.exports.index = async (req, res) => {
     const index = filterStatus.findIndex((index) => index.status == "");
     filterStatus[index].class = "active";
   }
+
   let find = {
     deleted: false,
   };
   if (req.query.status) {
     find.status = req.query.status;
+  }
+  //button status start end
+  if (req.query.keyword) {
+    find.title = req.query.keyword;
   }
   const product = await Product.find(find);
   res.render("admin/page/product/index", {
