@@ -17,7 +17,7 @@ if (buttonStatus.length > 0) {
 // start search product
 const formSearch = document.querySelector("#form-search");
 if (formSearch) {
-  let url = new URL(window.localStorage.href);
+  let url = new URL(window.location.href);
   formSearch.addEventListener("submit", (e) => {
     e.preventDefault();
     const keyword = e.target.elements.keyword.value;
@@ -30,3 +30,22 @@ if (formSearch) {
   });
 }
 //end search product
+//pagination
+const buttonPage = document.querySelectorAll("[button-page]");
+
+if (buttonPage) {
+  console.log("hello");
+  let url = new URL(window.location.href);
+  buttonPage.forEach((button) => {
+    button.addEventListener("click", () => {
+      const buttonvalue = button.getAttribute("button-page");
+      if (buttonvalue) {
+        url.searchParams.set("page", buttonvalue);
+      } else {
+        url.searchParams.set("page", 1);
+      }
+      window.location.href = url.href;
+    });
+  });
+}
+//end pagination

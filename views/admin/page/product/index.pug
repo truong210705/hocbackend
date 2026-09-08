@@ -1,4 +1,7 @@
 extends ../../layout/default.pug
+include ../../../mixins/filterStatus.pug
+include ../../../mixins/search.pug
+include ../../../mixins/pagination.pug
 block main
   h1 Danh sách sản phẩm
   .card.mb-3
@@ -6,16 +9,9 @@ block main
   .card-body
     .row
       .col-6
-        each item in filterStatus
-          button(
-            class=`btn btn-sm ml-1 btn-outline-success ${item.class}` button-status=item.status
-          ) #{item.name}  
+        +filterStatus(filterStatus) 
       .col-6
-        form(id="form-search")
-          .input-group(style="width: 250px;")
-            input.form-control(type="text" placeholder="Nhập từ khóa" name="keyword" value=keyword)
-            .input-group-append
-              button.btn.btn-success(type="submit") Tìm
+        +search(keyword)
   table.table.table-hover.table-sm
     thead
       tr
@@ -43,4 +39,6 @@ block main
           td
             button(class="btn btn-warning btn-sm") Sửa
             button(class="btn btn-danger btn-sm ml-1") Xóa
+  nav
+    +pagination(pagination)
     script(src="/admin/js/script.js") 
