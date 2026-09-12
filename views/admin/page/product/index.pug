@@ -7,6 +7,25 @@ block main
   .card.mb-3
   .card-header Bộ lọc và Tìm kiếm
   .card-body
+  
+    form(
+      action=`${prefixAdmin}/products/change-multi?_method=PATCH`
+      method="POST"
+      form-change-multi
+    )
+      .d-flex.align-items-start
+        .form-group
+          select(name="type" class="form-control")
+            option(value="active") Hoạt động
+            option(value="inactive") Dừng hoạt động
+        .form-group
+          input(
+            type="text"
+            name="ids"
+            value=""
+            class="form-control"
+          )
+        button(type="submit" class="btn btn-primary") Áp dụng
     .row
       .col-6
         +filterStatus(filterStatus) 
@@ -35,10 +54,20 @@ block main
           td #{item.title}
           td #{item.price}
           td
-            a(href="#" class="badge badge-success") Hoạt động
+            if(item.status=="active")
+              a(href="javascript:;" data-status="active" data-id=item.id button-change-status class="badge badge-success") Hoạt động
+            else  
+              a(href="javascript:;" data-status="inactive" data-id=item.id button-change-status class="badge badge-danger") Dừng Hoạt động
           td
             button(class="btn btn-warning btn-sm") Sửa
             button(class="btn btn-danger btn-sm ml-1") Xóa
   nav
     +pagination(pagination)
+    form(
+      action=""
+      method="GET"
+      id="form-change-status"
+      data-path=`${prefixAdmin}/products/changestatus`
+    )
     script(src="/admin/js/script.js") 
+    script(src="/admin/js/product.js") 
