@@ -34,5 +34,19 @@ if (checkboxMulti) {
       });
     }
   });
+
+  inputid.forEach((check) => {
+    check.addEventListener("click", () => {
+      const countchecked = checkboxMulti.querySelectorAll(
+        "input[name='id']:checked",
+      );
+      console.log(countchecked.length);
+      if (countchecked.length == inputid.length) {
+        checkall.checked = true;
+      } else {
+        checkall.checked = false;
+      }
+    });
+  });
 }
 //end changemultistatus
