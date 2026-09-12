@@ -7,7 +7,7 @@ if (buttonChange.length > 0) {
       const statusData = button.getAttribute("data-status");
       const status = statusData == "active" ? "inactive" : "active";
       const id = button.getAttribute("data-id");
-      const action = path + "/" + status + "/" + id;
+      const action = path + "/" + status + "/" + id + "?_method=PATCH";
       formchange.action = action;
       formchange.submit();
     });
