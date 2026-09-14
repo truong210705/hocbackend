@@ -4,6 +4,13 @@ include ../../../mixins/search.pug
 include ../../../mixins/pagination.pug
 include ../../../mixins/form-change-multi-status.pug
 block main
+  - if (messages.success)
+  .message.info
+    div(
+      class="alert alert-success"
+      show-alert
+      data-time="5000"
+    ) #{messages.success}
   h1 Danh sách sản phẩm
   .card.mb-3
   .card-header Bộ lọc và Tìm kiếm
