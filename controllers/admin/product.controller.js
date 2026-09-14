@@ -50,22 +50,32 @@ module.exports.changestatus = async (req, res) => {
 };
 module.exports.changesmulti = async (req, res) => {
   const type = req.body.type;
-  const id = req.body.ids.split(",");
+  const ids = req.body.ids.split(",");
   switch (type) {
     case "active":
-      await Product.updateMany({ _id: { $in: id } }, { status: "active" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
       break;
     case "inactive":
-      await Product.updateMany({ _id: { $in: id } }, { status: "inactive" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       break;
     case "delete-all":
       await Product.updateMany(
-        { _id: id },
+        { _id: ids },
         { deleted: true, deleteAt: new Date() },
       );
+      break;
+    case "change-position":
+      console.log(ids);
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+        await Product.updateOne({ _id: id }, { position: position });
+      }
+      break;
     default:
       break;
   }
+
   res.redirect(req.get("Referer")); // thay thế res.redirect('back) để trở về trang trước
 };
 module.exports.deleteProduct = async (req, res) => {

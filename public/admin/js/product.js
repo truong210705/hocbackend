@@ -61,7 +61,7 @@ if (formChangeStatus) {
       "input[name='id']:checked",
     );
     const typeChange = e.target.elements.type.value;
-    if (typeChange) {
+    if (typeChange == "delete-all") {
       const conf = confirm("bạn có chắc muốn xoá các sản phẩm này chứ");
       if (!conf) {
         return;
@@ -71,12 +71,21 @@ if (formChangeStatus) {
     if (boxchecked.length > 0) {
       const dsid = [];
       const ids = formChangeStatus.querySelector("input[name='ids']");
-      console.log(ids);
+
       boxchecked.forEach((input) => {
         const id = input.value;
-        dsid.push(id);
+        if (typeChange == "change-position") {
+          const position = input
+            .closest("tr")
+            .querySelector("input[name='position']").value;
+          const tmp = `${id}-${position}`;
+          dsid.push(tmp);
+          console.log(dsid);
+        } else {
+          dsid.push(id);
+        }
       });
-      console.log(dsid.join(","));
+
       ids.value = dsid.join(",");
       formChangeStatus.submit();
     } else {
