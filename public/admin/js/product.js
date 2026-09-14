@@ -60,6 +60,14 @@ if (formChangeStatus) {
     const boxchecked = checkboxMulti.querySelectorAll(
       "input[name='id']:checked",
     );
+    const typeChange = e.target.elements.type.value;
+    if (typeChange) {
+      const conf = confirm("bạn có chắc muốn xoá các sản phẩm này chứ");
+      if (!conf) {
+        return;
+      }
+    }
+    console.log(typeChange);
     if (boxchecked.length > 0) {
       const dsid = [];
       const ids = formChangeStatus.querySelector("input[name='ids']");

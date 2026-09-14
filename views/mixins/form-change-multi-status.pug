@@ -7,8 +7,10 @@ mixin changeMultiStatus(url)
       .d-flex.align-items-start
         .form-group
           select(name="type" class="form-control")
+            option(disable selected) --chọn chức năng bắc kì--
             option(value="active") Hoạt động
             option(value="inactive") Dừng hoạt động
+            option(value="delete-all") Xoá sản phẩm
         .form-group
           input(
             type="text"
