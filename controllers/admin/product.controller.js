@@ -32,6 +32,7 @@ module.exports.index = async (req, res) => {
   // );
   //end phân trang
   const product = await Product.find(find)
+    .sort({ position: "asc" })
     .limit(objectPagination.limitPage)
     .skip(objectPagination.skipPage);
   res.render("admin/page/product/index", {
