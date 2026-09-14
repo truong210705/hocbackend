@@ -2,30 +2,14 @@ extends ../../layout/default.pug
 include ../../../mixins/filterStatus.pug
 include ../../../mixins/search.pug
 include ../../../mixins/pagination.pug
+include ../../../mixins/form-change-multi-status.pug
 block main
   h1 Danh sách sản phẩm
   .card.mb-3
   .card-header Bộ lọc và Tìm kiếm
   .card-body
   
-    form(
-      action=`${prefixAdmin}/products/change-multi?_method=PATCH`
-      method="POST"
-      form-change-multi
-    )
-      .d-flex.align-items-start
-        .form-group
-          select(name="type" class="form-control")
-            option(value="active") Hoạt động
-            option(value="inactive") Dừng hoạt động
-        .form-group
-          input(
-            type="text"
-            name="ids"
-            value=""
-            class="form-control"
-          )
-        button(type="submit" class="btn btn-primary") Áp dụng
+    +changeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`)
     .row
       .col-6
         +filterStatus(filterStatus) 
@@ -67,7 +51,7 @@ block main
               a(href="javascript:;" data-status="inactive" data-id=item.id button-change-status class="badge badge-danger") Dừng Hoạt động
           td
             button(class="btn btn-warning btn-sm") Sửa
-            button(class="btn btn-danger btn-sm ml-1") Xóa
+            button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
   nav
     +pagination(pagination)
     form(
@@ -75,6 +59,12 @@ block main
       method="POST"
       id="form-change-status"
       data-path=`${prefixAdmin}/products/changestatus`
+    )
+    form(
+      action=""
+      method="POST"
+      id="form-delete-item"
+      data-path=`${prefixAdmin}/products/delete`
     )
     script(src="/admin/js/script.js") 
     script(src="/admin/js/product.js") 
