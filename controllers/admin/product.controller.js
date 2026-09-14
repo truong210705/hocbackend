@@ -57,15 +57,18 @@ module.exports.changesmulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      req.flash("success", `thay đổi thành công ${ids.length} sản phẩm`);
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash("success", `thay đổi thành công ${ids.length} sản phẩm`);
       break;
     case "delete-all":
       await Product.updateMany(
         { _id: ids },
         { deleted: true, deleteAt: new Date() },
       );
+      req.flash("success", `xoá thành công ${ids.length} sản phẩm`);
       break;
     case "change-position":
       console.log(ids);
@@ -74,6 +77,7 @@ module.exports.changesmulti = async (req, res) => {
         position = parseInt(position);
         await Product.updateOne({ _id: id }, { position: position });
       }
+      req.flash("success", `thay đổi vị trí thành công ${ids.length} sản phẩm`);
       break;
     default:
       break;
