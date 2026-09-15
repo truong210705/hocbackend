@@ -3,20 +3,20 @@ include ../../../mixins/filterStatus.pug
 include ../../../mixins/search.pug
 include ../../../mixins/pagination.pug
 include ../../../mixins/form-change-multi-status.pug
+include ../../../mixins/alert.pug
 block main
-  - if (messages.success)
-  .message.info
-    div(
-      class="alert alert-success"
-      show-alert
-      data-time="5000"
-    ) #{messages.success}
+  +alert(5000)
   h1 Danh sách sản phẩm
   .card.mb-3
   .card-header Bộ lọc và Tìm kiếm
   .card-body
   
     +changeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+    .col-4
+      a(
+        href=`${prefixAdmin}/products/create`
+        class="btn btn-outline-success"
+      ) + Thêm mới
     .row
       .col-6
         +filterStatus(filterStatus) 
