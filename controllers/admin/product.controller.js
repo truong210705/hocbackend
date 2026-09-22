@@ -110,9 +110,53 @@ module.exports.createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
   const product = new Product(req.body);
   await product.save();
 
   res.redirect(`${systemConfig.prefixadmin}/products`);
+};
+module.exports.edit = async (req, res) => {
+  const find = {
+    deleted: false,
+    _id: req.params.id,
+  };
+  const product = await Product.findOne(find);
+  console.log(product);
+  res.render("admin/page/product/edit", {
+    title: "trang sản phẩm",
+    product: product,
+  });
+};
+module.exports.editPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.position = parseInt(req.body.position);
+  const id = req.params.id;
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
+  try {
+    await Product.updateOne({ _id: id }, req.body);
+    req.flash("success", "cập nhật sản phẩm thành công");
+  } catch (error) {
+    req.flash("error", "cập nhật sản phẩm thất bại");
+  }
+
+  res.redirect(`${systemConfig.prefixadmin}/products`);
+};
+module.exports.detail = async (req, res) => {
+  const id = req.params.id;
+  const find = {
+    deleted: false,
+    _id: id,
+  };
+  const product = await Product.findOne(find);
+  res.render("admin/page/product/detail", {
+    title: "Trang chi tiết sản phẩm",
+    product: product,
+  });
 };
