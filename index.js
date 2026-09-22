@@ -20,9 +20,9 @@ app.use(flash());
 //end express flash
 app.use(bodyParser.urlencoded({ extended: false }));
 app.locals.prefixAdmin = system.prefixadmin;
-app.set("views", "./views");
+app.set("views", `${_Dirname}/views`);
 app.set("view engine", "pug");
-app.use(express.static("public"));
+app.use(express.static(`${_Dirname}/public`));
 route(app);
 routeAdmin(app);
 app.listen(port, () => {
