@@ -11,7 +11,6 @@ const session = require("express-session");
 var flash = require("express-flash");
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
-database.connect();
 app.use(methodOverride("_method"));
 //express flash
 app.use(cookieParser("abcd2107"));
@@ -20,11 +19,19 @@ app.use(flash());
 //end express flash
 app.use(bodyParser.urlencoded({ extended: false }));
 app.locals.prefixAdmin = system.prefixadmin;
-app.set("views", `${_Dirname}/views`);
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
-app.use(express.static(`${_Dirname}/public`));
+app.use(express.static(`${__dirname}/public`));
 route(app);
 routeAdmin(app);
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+database
+  .connect()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  })
+  .catch((error) => {
+    console.log("server not started", error);
+  });
+module.exports = app;
