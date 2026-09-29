@@ -134,9 +134,6 @@ module.exports.editPost = async (req, res) => {
   req.body.stock = parseInt(req.body.stock);
   req.body.position = parseInt(req.body.position);
   const id = req.params.id;
-  if (req.file) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
   try {
     await Product.updateOne({ _id: id }, req.body);
     req.flash("success", "cập nhật sản phẩm thành công");
