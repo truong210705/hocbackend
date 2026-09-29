@@ -113,6 +113,37 @@ if (uploadImage) {
   });
 }
 //end upload image
+//sort
+const formSelect = document.querySelector("[sort]");
+if (formSelect) {
+  let url = new URL(window.location.href);
+  const sortSelect = formSelect.querySelector("[sort-select]");
+  console.log(sortSelect);
+  const sortClear = formSelect.querySelector("[sort-clear]");
+  sortSelect.addEventListener("change", (e) => {
+    const [sortkey, sortvalue] = e.target.value.split("-");
+    url.searchParams.set("sortkey", sortkey);
+    url.searchParams.set("sortvalue", sortvalue);
+    window.location.href = url.href;
+  });
+  sortClear.addEventListener("click", () => {
+    url.searchParams.delete("sortkey");
+    url.searchParams.delete("sortvalue");
+    window.location.href = url.href;
+  });
+  //end sort
+  //display sort selected
+  const sortkey = url.searchParams.get("sortkey");
+  const sortvalue = url.searchParams.get("sortvalue");
+  const stringSelect = `${sortkey}-${sortvalue}`;
+  console.log(stringSelect);
+  const optionSelect = formSelect.querySelector(
+    `option[value=${stringSelect}]`,
+  );
+  optionSelect.selected = true;
+  //end display sort selected
+}
+
 // delete item;
 const buttonDelete = document.querySelectorAll("[button-delete]");
 if (buttonDelete) {
