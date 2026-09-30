@@ -13,9 +13,9 @@ block main
         .card-body 
             .row 
                 .col-6
-                    //- +filterStatus(filterStatus)
+                    +filterStatus(filterStatus)
                 .col-6
-                    +search(keyword)
+                    +search(key)
     .card.mb-3
         .card-header Danh sách danh mục
             .card-body 
@@ -98,7 +98,8 @@ block main
     id='form-deleted'
     data-path=admin+`/product_category/delete`
 )                      
-
+    script(src="/admin/js/products.js")
+    script(src="/admin/js/script.js")
        
                                    
 

@@ -1,4 +1,4 @@
-module.exports = (query, find) => {
+module.exports = (query) => {
   const objectSearch = {
     keyword: "",
   };
