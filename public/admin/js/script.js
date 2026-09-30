@@ -63,3 +63,21 @@ if (showAlert) {
   });
 }
 //end show alert
+//upload image
+
+const uploadImage = document.querySelector("[upload-image]");
+
+if (uploadImage) {
+  console.log("jjjjjjj");
+  const uploadImInput = document.querySelector("[upload-image-input]");
+  const uploadImPr = document.querySelector("[upload-image-preview]");
+  uploadImInput.addEventListener("change", (e) => {
+    console.log(e);
+    const file = e.target.files[0];
+    console.log(file);
+    if (file) {
+      uploadImPr.src = URL.createObjectURL(file);
+    }
+  });
+}
+//end upload image
