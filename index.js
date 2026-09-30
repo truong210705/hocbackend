@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT;
+var path = require("path");
 const route = require("./router/clients/index.router");
 const routeAdmin = require("./router/admin/index.route");
 const database = require("./config/database");
@@ -24,6 +25,12 @@ app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));
 route(app);
 routeAdmin(app);
+//tiny MCE
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce")),
+);
+//end tiny MCE
 database
   .connect()
   .then(() => {
