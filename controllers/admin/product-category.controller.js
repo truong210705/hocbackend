@@ -2,6 +2,7 @@ const ProductCategory = require("../../model/product-category.model");
 const systemConfig = require("../../config/system");
 const searchHelper = require("../../helper/search");
 const filterStatusHelper = require("../../helper/filterStatus");
+const productCategory = require("../../model/product-category.model");
 module.exports.index = async (req, res) => {
   const find = {
     deleted: false,
@@ -39,6 +40,23 @@ module.exports.createPost = async (req, res) => {
   }
   const category = new ProductCategory(req.body);
   await category.save();
-
+  req.flash("success", `thêm danh mục thành công`);
   res.redirect(`${systemConfig.prefixadmin}/product-category`);
+};
+module.exports.changestatus = async (req, res) => {
+  try {
+    if (req.params.status && req.params.id) {
+      await productCategory.updateOne(
+        { _id: req.params.id },
+        { status: req.params.status },
+      );
+      req.flash("success", `chỉnh sửa trạng thái thành công`);
+      res.redirect(`${systemConfig.prefixadmin}/product-category`);
+    } else {
+      return;
+    }
+  } catch (err) {
+    req.flash("error", `chỉnh sửa trạng thất bại`);
+    res.redirect(`${systemConfig.prefixadmin}/product-category`);
+  }
 };

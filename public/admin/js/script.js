@@ -1,6 +1,7 @@
 const buttonStatus = document.querySelectorAll("[button-status]");
 let url = new URL(window.location.href);
 if (buttonStatus.length > 0) {
+  console.log("check");
   buttonStatus.forEach((button) => {
     button.addEventListener("click", () => {
       const status = button.getAttribute("button-status");
@@ -14,6 +15,24 @@ if (buttonStatus.length > 0) {
   });
 }
 //end button status
+// start change status
+const buttonChange = document.querySelectorAll("[button-change-status]");
+if (buttonChange.length > 0) {
+  console.log("check");
+  const formchange = document.querySelector("#form-change-status");
+  const path = formchange.getAttribute("data-path");
+  buttonChange.forEach((button) => {
+    button.addEventListener("click", () => {
+      const statusData = button.getAttribute("data-status");
+      const status = statusData == "active" ? "inactive" : "active";
+      const id = button.getAttribute("data-id");
+      const action = path + "/" + status + "/" + id + "?_method=PATCH";
+      formchange.action = action;
+      formchange.submit();
+    });
+  });
+}
+//end change status
 // start search product
 const formSearch = document.querySelector("#form-search");
 if (formSearch) {

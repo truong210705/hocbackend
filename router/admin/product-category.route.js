@@ -6,6 +6,7 @@ const validate = require("../../validates/admin/product.validates");
 const upload = multer();
 const controller = require("../../controllers/admin/product-category.controller");
 router.get("/", controller.index);
+router.patch("/change-status/:status/:id", controller.changestatus);
 router.get("/create", controller.create);
 router.post(
   "/create",
