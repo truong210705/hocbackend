@@ -2,6 +2,7 @@ const ProductCategory = require("../../model/product-category.model");
 const systemConfig = require("../../config/system");
 const searchHelper = require("../../helper/search");
 const filterStatusHelper = require("../../helper/filterStatus");
+const createTreeHelper = require("../../helper/createTree");
 const productCategory = require("../../model/product-category.model");
 module.exports.index = async (req, res) => {
   const find = {
@@ -48,7 +49,7 @@ module.exports.create = async (req, res) => {
     });
     return tree;
   }
-  const newCate = Createtree(category);
+  const newCate = createTreeHelper(category);
   console.log(newCate);
   //end tree
   res.render("admin/page/product-category/create", {
