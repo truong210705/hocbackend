@@ -27,14 +27,39 @@ module.exports.index = async (req, res) => {
   });
 };
 module.exports.create = async (req, res) => {
+  //tree
+  const find = {
+    deleted: false,
+  };
+  const category = await ProductCategory.find(find);
+  console.log("newCate");
+  function Createtree(arr, parentid = "") {
+    const tree = [];
+    arr.forEach((item) => {
+      if (item.parent_id == parentid) {
+        const newItem = item;
+        const childrent = Createtree(arr, item.id);
+        console.log(childrent.length + " " + item.title);
+        if (childrent.length > 0) {
+          newItem.childrent = childrent;
+        }
+        tree.push(newItem);
+      }
+    });
+    return tree;
+  }
+  const newCate = Createtree(category);
+  console.log(newCate);
+  //end tree
   res.render("admin/page/product-category/create", {
     title: "Danh mục sản phẩm",
+    category: newCate,
   });
 };
 module.exports.createPost = async (req, res) => {
   if (req.body.position == "") {
     const count = await ProductCategory.countDocuments();
-    req.body.position = countProducts + 1;
+    req.body.position = count + 1;
   } else {
     req.body.position = parseInt(req.body.position);
   }

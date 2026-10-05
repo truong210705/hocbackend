@@ -7,7 +7,7 @@ include ../../../mixins/alert.pug
 include ../../../mixins/sortSelect.pug
 block main
     h1 Danh mục sản phẩm
-    +alert()
+    +alert(5000)
     .card.mb-3 
         .card-header Bộ lọc và tìm kiếm 
         .card-body 
@@ -61,13 +61,7 @@ block main
                                 )
                             td #{item.title}
                             td 
-                                input(
-                                type="number"
-                                value=item.position
-                                style="width: 60px"
-                                min="1"
-                                name="position"
-                            )
+                               p #{item.parent_id}
                             td
                                 if(item.status=="active")
                                     a(href="javascript:;" data-status="active" data-id=item.id button-change-status class="badge badge-success") Hoạt động
