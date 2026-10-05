@@ -4,7 +4,7 @@ mixin treeTable(category,index=1)
         tr
         td 
             input(type="checkbox" name="id" value=item.id)
-        td 1
+        td #{item.count}
         td
             img(
             src= item.thumbnail
