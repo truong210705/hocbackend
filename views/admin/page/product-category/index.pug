@@ -5,6 +5,7 @@ include ../../../mixins/pagination.pug
 include ../../../mixins/form-change-multi-status.pug
 include ../../../mixins/alert.pug
 include ../../../mixins/sortSelect.pug
+include ../../../mixins/treeTable.pug
 block main
     h1 Danh mục sản phẩm
     +alert(5000)
@@ -47,36 +48,7 @@ block main
                             th Trạng thái
                             th Hành động 
                     tbody 
-                        each item in category
-                            tr
-                            td 
-                                input(type="checkbox" name="id" value=item.id)
-                            td 1
-                            td
-                                img(
-                                src= item.thumbnail
-                                alt="Sản phẩm 1"
-                                width="100px"
-                                height="auto"
-                                )
-                            td #{item.title}
-                            td 
-                               p #{item.parent_id}
-                            td
-                                if(item.status=="active")
-                                    a(href="javascript:;" data-status="active" data-id=item.id button-change-status class="badge badge-success") Hoạt động
-                                else  
-                                    a(href="javascript:;" data-status="inactive" data-id=item.id button-change-status class="badge badge-danger") Dừng Hoạt động
-                            td
-                                a(
-                                        href=`${prefixAdmin}/products/detail/${item.id}`
-                                        class="btn btn-secondary btn-sm"
-                                    ) Chi tiết
-                                a(
-                                    href=`${prefixAdmin}/products/edit/${item.id}`
-                                    class="btn btn-warning btn-sm"
-                                ) Sửa
-                                button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa                
+                        +treeTable(category)               
 
     
     script(src="admin/js/product.js")

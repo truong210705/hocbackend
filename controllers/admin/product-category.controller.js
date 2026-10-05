@@ -17,12 +17,15 @@ module.exports.index = async (req, res) => {
   if (req.query.status) {
     find.status = req.query.status;
   }
+
   const filterStatus = filterStatusHelper(req.query);
   const category = await ProductCategory.find(find);
-  console.log(category);
+
+  const newCate = createTreeHelper(category);
+  console.log(newCate);
   res.render("admin/page/product-category/index", {
     title: "Danh mục sản phẩm",
-    category: category,
+    category: newCate,
     key: keyword.keyword,
     filterStatus,
   });
@@ -33,22 +36,6 @@ module.exports.create = async (req, res) => {
     deleted: false,
   };
   const category = await ProductCategory.find(find);
-  console.log("newCate");
-  function Createtree(arr, parentid = "") {
-    const tree = [];
-    arr.forEach((item) => {
-      if (item.parent_id == parentid) {
-        const newItem = item;
-        const childrent = Createtree(arr, item.id);
-        console.log(childrent.length + " " + item.title);
-        if (childrent.length > 0) {
-          newItem.childrent = childrent;
-        }
-        tree.push(newItem);
-      }
-    });
-    return tree;
-  }
   const newCate = createTreeHelper(category);
   console.log(newCate);
   //end tree
