@@ -1,8 +1,10 @@
 const Product = require("../../model/product.model");
+const ProductCategory = require("../../model/product-category.model");
 const filterStatusHelper = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
 const systemConfig = require("../../config/system");
+const createTreeHelper = require("../../helper/createTree");
 module.exports.index = async (req, res) => {
   const filterStatus = filterStatusHelper(req.query);
   const key = searchHelper(req.query);
@@ -45,6 +47,8 @@ module.exports.index = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitPage)
     .skip(objectPagination.skipPage);
+  //category
+
   res.render("admin/page/product/index", {
     title: "trang sản phẩm",
     product: product,
@@ -103,8 +107,15 @@ module.exports.deleteProduct = async (req, res) => {
   res.redirect(req.get("Referer")); // thay thế res.redirect('back) để trở về trang trước
 };
 module.exports.create = async (req, res) => {
+  const find = {
+    deleted: false,
+  };
+  const category = await ProductCategory.find(find);
+  console.log(category);
+  const newCate = createTreeHelper(category);
   res.render("admin/page/product/create", {
     title: "trang sản phẩm",
+    category: newCate,
   });
 };
 module.exports.createPost = async (req, res) => {
@@ -129,11 +140,22 @@ module.exports.edit = async (req, res) => {
     deleted: false,
     _id: req.params.id,
   };
+  const category = await ProductCategory.find({ deleted: false });
+
+  console.log("category");
+  const newCate = createTreeHelper(category);
   const product = await Product.findOne(find);
+  // const findCate = await ProductCategory.findById({
+  //   deleted: false,
+  //   id: product.product_category_id,
+  // });
+  console.log(product.product_category_id);
   console.log(product);
   res.render("admin/page/product/edit", {
     title: "trang sản phẩm",
     product: product,
+    category: newCate,
+    // findCate: findCate,
   });
 };
 module.exports.editPost = async (req, res) => {
