@@ -1,0 +1,93 @@
+extends ../../layout/default.pug
+include ../../../mixins/alert.pug
+include ../../../mixins/tree.pug
+block main 
+    //- +alert-error()
+    form(
+        action=`${prefixAdmin}/product-category/edit/${findCate.id}`
+        id="form-creat-product"
+        method="POST"
+        enctype="multipart/form-data"
+    )
+        div(class="form-group")
+            label(for="title") Tiêu đề
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                required
+                value= findCate.title
+            )
+            select(
+                name="parent_id"
+                id="parent_id"
+                class="form-control"
+            ) 
+                option(value="") -- Chọn danh mục cha --
+                +tree(category,1,findCate.parent_id)
+                
+        div(class="form-group")
+            label(for="desc") Mô tả
+            textarea(
+                class="form-control"
+                id="desc"
+                name="description"
+                rows="5"
+                value= findCate.description
+            )
+
+        div(class="form-group" upload-image)
+            label(for="thumbnail") ảnh
+            input(
+                type="file"
+                class="form-control"
+                id="thumbnail"
+                name="thumbnail"
+                accept="image/*"
+                upload-image-input
+            )
+            img(
+                src=""
+                upload-image-preview
+                class="image-preview"
+            )
+        div(class="form-group")
+            label(for="posittion") Vị trí
+            input(
+                type="number"
+                class="form-control"
+                id="position"
+                name="position"
+                placeholder="tự động tăng"
+                min="1"
+                value=findCate.position
+            )
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusActive"
+                name="status"
+                value="active"
+                checked= (findCate.status=== "active" )
+            )
+            label(for="statusActive" class="form-check-label") Hoạt động
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusInActive"
+                name="status"
+                value="inactive"
+                checked= (findCate.status=== "inactive" )
+            )
+            label(for="statusInActive" class="form-check-label") Dừng hoạt động
+        div(class="form-group")
+            button(
+                type="submit" 
+                class="btn btn-primary"
+            ) Tạo mới
+
+    script(src="/admin/js/products.js")
+    script(src="/admin/js/script.js")

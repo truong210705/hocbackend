@@ -73,3 +73,44 @@ module.exports.changestatus = async (req, res) => {
     res.redirect(`${systemConfig.prefixadmin}/product-category`);
   }
 };
+module.exports.edit = async (req, res) => {
+  //tree
+
+  const find = {
+    deleted: false,
+  };
+  const category = await ProductCategory.find(find);
+  const newCate = createTreeHelper(category);
+  const findCate = await ProductCategory.findById({
+    deleted: false,
+    _id: req.params.id,
+  });
+  console.log(findCate.title);
+  //end tree
+  res.render("admin/page/product-category/edit", {
+    title: "Danh mục sản phẩm",
+    findCate: findCate,
+    category: newCate,
+  });
+};
+module.exports.editPost = async (req, res) => {
+  //tree
+
+  // const find = {
+  //   deleted: false,
+  // };
+  // const category = await ProductCategory.find(find);
+  // const newCate = createTreeHelper(category);
+  // const findCate = await ProductCategory.findById({
+  //   deleted: false,
+  //   _id: req.params.id,
+  // });
+  // console.log(findCate.title);
+  // //end tree
+  // res.render("admin/page/product-category/edit", {
+  //   title: "Danh mục sản phẩm",
+  //   findCate: findCate,
+  //   category: newCate,
+  // });
+  res.send("hahahaa");
+};
