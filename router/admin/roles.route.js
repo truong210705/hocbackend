@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../../controllers/admin/roles.controller");
 router.get("/", controller.index);
-//
+router.get("/permission", controller.indexPermission);
+router.patch("/permission", controller.indexPermissionPatch);
 router.get("/create", controller.create);
 router.get("/edit/:id", controller.edit);
 router.post("/create", controller.createPost);
