@@ -3,6 +3,7 @@ const product = require("./product.route");
 const productCategory = require("./product-category.route");
 const roles = require("./roles.route");
 const accounts = require("./accounts.route");
+const auth = require("./auth.route");
 const system = require("../../config/system");
 module.exports = (app) => {
   app.use(system.prefixadmin + "/dashboard", dashboard);
@@ -10,4 +11,5 @@ module.exports = (app) => {
   app.use(system.prefixadmin + "/products", product);
   app.use(system.prefixadmin + "/roles", roles);
   app.use(system.prefixadmin + "/accounts", accounts);
+  app.use(system.prefixadmin + "/auth", auth);
 };
