@@ -7,6 +7,7 @@ if (table) {
   submitPermis.addEventListener("click", () => {
     const permission = [];
     const row = table.querySelectorAll("[data-name]");
+    console.log(row);
     row.forEach((item) => {
       const name = item.getAttribute("data-name");
       const inputs = item.querySelectorAll("input");
@@ -26,7 +27,7 @@ if (table) {
           //   console.log(index);
           //   console.log(checked);
           if (checked) {
-            permission[index].permission.push(name); // ghi nhớ dữ liệu sẽ đi từ trên xuống id quyền 1 , id quyền 2, checked quyền 1 checked quyền 2
+            permission[index].permission.push(name);
           }
         });
       }
