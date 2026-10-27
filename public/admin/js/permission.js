@@ -41,3 +41,23 @@ if (table) {
   });
 }
 //end permission
+// End Permissions
+
+// Permissions Data Default
+const dataRecords = document.querySelector("[data-roles]"); //lấy dữ liệu roles
+if (dataRecords) {
+  const records = JSON.parse(dataRecords.getAttribute("data-roles"));
+  //chuyển sang dạng mảng
+  const tablePermissions = document.querySelector("[table-permission]");
+  //lấy cái table đang chauws các tr và input
+  records.forEach((record, index) => {
+    const permissions = record.permissions; //lấy danh sách các quyền của roles
+
+    permissions.forEach((permission) => {
+      const row = tablePermissions.querySelector(`[data-name="${permission}"]`); //lấy đúng cột có data-name= vd:products-category_view,... lúc này chứa 2 cái input của hàng đó
+      const input = row.querySelectorAll("input")[index]; //lấy đúng input của index đó
+      input.checked = true;
+    });
+  });
+}
+// End Permissions Data Default
