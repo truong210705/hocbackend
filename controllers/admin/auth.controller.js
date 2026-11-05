@@ -2,9 +2,13 @@ const md5 = require("md5");
 const Account = require("../../model/accounts.model");
 const systemConfig = require("../../config/system");
 module.exports.login = async (req, res) => {
-  res.render("admin/page/auth/index", {
-    title: "Đăng nhập",
-  });
+  if (req.cookies.token) {
+    res.redirect(`${systemConfig.prefixadmin}/dashboard`);
+  } else {
+    res.render("admin/page/auth/index", {
+      title: "Đăng nhập",
+    });
+  }
 };
 module.exports.loginPost = async (req, res) => {
   const email = req.body.email;
