@@ -14,10 +14,11 @@ block main
   
     +changeMultiStatus(`${prefixAdmin}/products/change-multi?_method=PATCH`)
     .col-4
-      a(
-        href=`${prefixAdmin}/products/create`
-        class="btn btn-outline-success"
-      ) + Thêm mới
+      if(role.permissions.includes("products_create"))  
+        a(
+          href=`${prefixAdmin}/products/create`
+          class="btn btn-outline-success"
+        ) + Thêm mới
     .row
       .col-6
         +filterStatus(filterStatus) 
@@ -74,11 +75,13 @@ block main
                     href=`${prefixAdmin}/products/detail/${item.id}`
                     class="btn btn-secondary btn-sm"
                 ) Chi tiết
-            a(
-                  href=`${prefixAdmin}/products/edit/${item.id}`
-                  class="btn btn-warning btn-sm"
-              ) Sửa
-            button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
+            if(role.permissions.includes("products_edit"))  
+              a(
+                    href=`${prefixAdmin}/products/edit/${item.id}`
+                    class="btn btn-warning btn-sm"
+                ) Sửa
+            if(role.permissions.includes("products_delete"))  
+              button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
   nav
     +pagination(pagination)
     form(
