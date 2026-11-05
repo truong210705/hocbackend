@@ -99,3 +99,12 @@ module.exports.editPost = async (req, res) => {
   await ProductCategory.updateOne({ _id: id }, req.body);
   res.redirect(`${systemConfig.prefixadmin}/product-category`);
 };
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+  await ProductCategory.updateOne(
+    { _id: id },
+    { deleted: true, deleteAt: new Date() },
+  );
+  req.flash("success", "xoá danh mục thành công");
+  res.redirect(req.get("Referer"));
+};

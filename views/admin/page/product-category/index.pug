@@ -53,21 +53,20 @@ block main
                             +treeTable(category)               
 
     
-    script(src="admin/js/product.js")
     form(
-                method='POST'
-        action=""
-        id='form-change-status'
-        data-path=`${prefixAdmin}/product-category/change-status`
+      method="POST"
+      action=""
+      id="form-change-status"
+      data-path=`${prefixAdmin}/product-category/change-status`
     )
     form(
-            method='POST'
-    action=""
-    id='form-deleted'
-    data-path=admin+`/product_category/delete`
-)                      
-    script(src="/admin/js/products.js")
+      method="POST"
+      action=""
+      id="form-delete-item"
+      data-path=`${prefixAdmin}/product-category/delete`
+    )
     script(src="/admin/js/script.js")
+    script(src="/admin/js/product.js")
        
                                    
 

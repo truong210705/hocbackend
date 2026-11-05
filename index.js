@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 var path = require("path");
+var moment = require("moment");
 const route = require("./router/clients/index.router");
 const routeAdmin = require("./router/admin/index.route");
 const database = require("./config/database");
@@ -19,7 +20,10 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 //end express flash
 app.use(bodyParser.urlencoded({ extended: false }));
+//biến toàn cục
+app.locals.moment = moment;
 app.locals.prefixAdmin = system.prefixadmin;
+//
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 app.use(express.static(`${__dirname}/public`));

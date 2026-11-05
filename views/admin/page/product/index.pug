@@ -5,6 +5,7 @@ include ../../../mixins/pagination.pug
 include ../../../mixins/form-change-multi-status.pug
 include ../../../mixins/alert.pug
 include ../../../mixins/sortSelect.pug
+include ../../../mixins/moment.pug
 block main
   +alert(5000)
   h1 Danh sách sản phẩm
@@ -38,6 +39,7 @@ block main
         th Tiêu đề
         th Giá
         th Vị trí
+        th người tạo
         th Trạng thái
         th Hành động
     tbody
@@ -65,6 +67,10 @@ block main
             min="1"
             name="position"
           )
+          td 
+            p #{item.fullNameCreate}
+            if(item.createdBy.createdAt)
+              +GetDateTime(item.createdBy.createdAt)
           td
             if(item.status=="active")
               a(href="javascript:;" data-status="active" data-id=item.id button-change-status class="badge badge-success") Hoạt động

@@ -99,19 +99,25 @@ if (formSelect) {
   //display sort selected
   const sortkey = url.searchParams.get("sortkey");
   const sortvalue = url.searchParams.get("sortvalue");
-  const stringSelect = `${sortkey}-${sortvalue}`;
-  console.log(stringSelect);
-  const optionSelect = formSelect.querySelector(
-    `option[value=${stringSelect}]`,
-  );
-  optionSelect.selected = true;
+  if (sortkey && sortvalue) {
+    const stringSelect = `${sortkey}-${sortvalue}`;
+    const optionSelect = formSelect.querySelector(
+      `option[value="${stringSelect}"]`,
+    );
+    if (optionSelect) {
+      optionSelect.selected = true;
+    }
+  }
   //end display sort selected
 }
 
 // delete item;
 const buttonDelete = document.querySelectorAll("[button-delete]");
-if (buttonDelete) {
+if (buttonDelete.length > 0) {
   const formDelete = document.querySelector("#form-delete-item");
+  if (!formDelete) {
+    console.error("Không tìm thấy form #form-delete-item");
+  } else {
   const path = formDelete.getAttribute("data-path");
   buttonDelete.forEach((button) => {
     button.addEventListener("click", () => {
@@ -122,5 +128,6 @@ if (buttonDelete) {
       formDelete.submit();
     });
   });
+  }
 }
 //end delete item

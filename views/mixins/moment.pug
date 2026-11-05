@@ -1,0 +1,6 @@
+mixin GetDateTime(time)
+    span #{moment(time).format("DD/MM/YYYY HH:mm:ss")}
+mixin GetDate(time)  
+    span #{moment(time).format("DD/MM/YYYY")}
+mixin GetTime(time)
+    span #{moment(time).format("HH:mm:ss")}

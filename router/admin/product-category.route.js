@@ -9,6 +9,7 @@ router.get("/", controller.index);
 router.patch("/change-status/:status/:id", controller.changestatus);
 router.get("/create", controller.create);
 router.get("/edit/:id", controller.edit);
+router.delete("/delete/:id", controller.deleteItem);
 router.post(
   "/create",
   upload.single("thumbnail"),

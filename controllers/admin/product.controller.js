@@ -5,6 +5,7 @@ const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helper/createTree");
+const Account = require("../../model/accounts.model");
 module.exports.index = async (req, res) => {
   const filterStatus = filterStatusHelper(req.query);
   const key = searchHelper(req.query);
@@ -43,12 +44,18 @@ module.exports.index = async (req, res) => {
     sort.position = "asc";
   }
   //end sort
+
   const product = await Product.find(find)
     .sort(sort)
     .limit(objectPagination.limitPage)
     .skip(objectPagination.skipPage);
   //category
-
+  for (const item of product) {
+    const user = await Account.findOne({ _id: item.createdBy.account_id });
+    if (user) {
+      item.fullNameCreate = user.fullName;
+    }
+  }
   res.render("admin/page/product/index", {
     title: "trang sản phẩm",
     product: product,
@@ -79,7 +86,14 @@ module.exports.changesmulti = async (req, res) => {
     case "delete-all":
       await Product.updateMany(
         { _id: ids },
-        { deleted: true, deleteAt: new Date() },
+        {
+          deleted: true,
+          deletedAt: new Date(),
+          deletedBy: {
+            account_id: res.locals.account.id,
+            deletedAt: new Date(),
+          },
+        },
       );
       req.flash("success", `xoá thành công ${ids.length} sản phẩm`);
       break;
@@ -102,7 +116,14 @@ module.exports.deleteProduct = async (req, res) => {
   const id = req.params.id;
   await Product.updateOne(
     { _id: id },
-    { deleted: true, deletedAt: new Date() },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+      deletedBy: {
+        account_id: res.locals.account.id,
+        deletedAt: new Date(),
+      },
+    },
   );
   res.redirect(req.get("Referer")); // thay thế res.redirect('back) để trở về trang trước
 };
@@ -129,7 +150,9 @@ module.exports.createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-
+  req.body.createdBy = {
+    account_id: res.locals.account.id,
+  };
   const product = new Product(req.body);
   await product.save();
 
